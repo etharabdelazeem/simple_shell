@@ -65,7 +65,7 @@ void treat_file(char *line, int counter, FILE *fp, char **argv)
 /**
  * exit_bul_for_file - exit shell (file)
  * @line: a single line of the file
- * @cmd: string of the command 
+ * @cmd: string of the command
  * @fd: file descriptor
  * Return: nothing
  */

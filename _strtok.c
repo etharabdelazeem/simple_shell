@@ -50,7 +50,7 @@ char *_strtok(char *str, const char *delim)
  * check_delim - check if a char is a delimiter or not
  * @ch: the character
  * @str: the string
- * Return: on succes 1 and 0 on failure 
+ * Return: on succes 1 and 0 on failure
  */
 unsigned int check_delim(char ch, const char *str)
 {

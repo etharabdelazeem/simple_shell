@@ -98,7 +98,7 @@ int echo_bul(char **cmd, int st)
 {
 	char *path;
 	unsigned int pid;
-	
+
 	pid = getppid();
 
 	if (_strncmp(cmd[1], "$?", 2) == 0)
@@ -123,7 +123,7 @@ int echo_bul(char **cmd, int st)
 	else
 		return (print_echo(cmd));
 
-	
+
 	return (1);
 }
 

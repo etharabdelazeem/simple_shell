@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
- * print_error - prints the error messages 
+ * print_error - prints the error messages
  * @input:the input receivedx from the user
  * @counter: the counter of lines
  * @argv:the arguments vector
@@ -31,9 +31,8 @@ void prompt(void)
 }
 
 /**
- * check_builtin - check builtin
- *
- * @cmd:the entered command
+ * is_builtin - check builtin
+ * @comd:the entered command
  * Return: Zero upon success and -1 otherwise
  */
 int is_builtin(char **comd)

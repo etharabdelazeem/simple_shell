@@ -99,9 +99,9 @@ char *_memcpy(char *dest, char *src, unsigned int n)
  * @ptr: pointer of the array
  * @n: the int to fill
  * @len: the length of array
- * Return: nothing
+ * Return: void pointer
  */
-void *fill_an_array(void *prt, int n, unsigned int len)
+void *fill_an_array(void *ptr, int n, unsigned int len)
 {
 	char *p = ptr;
 	unsigned int i = 0;
@@ -112,5 +112,5 @@ void *fill_an_array(void *prt, int n, unsigned int len)
 		p++;
 		i++;
 	}
-	return (a);
+	return (ptr);
 }

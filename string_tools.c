@@ -22,6 +22,7 @@ int _strncmp(const char *s1, const char *s2, size_t n)
 	}
 	return (0);
 }
+
 /**
  *_strchr - find a character in a string
  * @s:the string to be searched in
@@ -32,16 +33,14 @@ int _strncmp(const char *s1, const char *s2, size_t n)
 char *_strchr(char *s, char c)
 {
 
-	do		{
-
+	do {
 		if (*s == c)
-			{
 			break;
-			}
-		}	while (*s++);
+	} while (*s++);
 
-return (s);
+	return (s);
 }
+
 /**
  * _strcat - function to concatinate two strings
  * @dest:the destination string
@@ -67,9 +66,10 @@ char *_strcat(char *dest, char *src)
 	*dest = '\0';
 	return (s);
 }
+
 /**
  * _strcpy - function to copy a src string to a destination string
- * @src: the first string 
+ * @src: the first string
  * @dest: the second string
  * Return: a pointer to the destination string
  */

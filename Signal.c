@@ -7,7 +7,7 @@
  */
 void _signal_(int signal)
 {
-	if (sig == SIGINT)
+	if (signal == SIGINT)
 	{
 		PRINTER("\n$ ");
 	}

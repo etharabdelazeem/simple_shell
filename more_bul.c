@@ -3,10 +3,10 @@
 /**
  * history_dis - display user history
  * @cmd: the command
- * @er: last command data
+ * @ec: last command data
  * Return: 0 on succes, -1 on failure
  */
-int history_dis(char **cmd, int er)
+int history_dis(char **cmd, int ec)
 {
 	char *filename = ".simple_shell_history";
 	FILE *fp;
@@ -15,7 +15,7 @@ int history_dis(char **cmd, int er)
 	int counter = 0;
 	char *er;
 	(void) cmd;
-	(void) er;
+	(void) ec;
 
 	fp = fopen(filename, "r");
 	if (fp == NULL)
@@ -54,11 +54,11 @@ int print_echo(char **cmd)
 		if (execve("/bin/echo", cmd, environ) == -1)
 			return (-1);
 
-			exit(EXIT_FAILURE);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid < 0)
 	{
-			return (-1);
+		return (-1);
 	}
 	else
 	{

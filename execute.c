@@ -30,9 +30,9 @@ int handle_builtin(char **cmd, int er)
 /**
  * check_cmd - (Fork, Wait & Excute) commands
  * @cmd: the command string
- * @input: input string 
+ * @input: input string
  * @c: number to be printed for error
- * @argv: Argument Vector 
+ * @argv: Argument Vector
  * Return: 1 on Null command, -1 if not found
  *    ,0 on successful execution
  */

@@ -9,11 +9,11 @@ char *_getenv(char *name)
 {
 	size_t nl, vl;
 	char *value;
-	int i, x, j;
+	int i = 0, x, j;
 
 	nl = _strlen(name);
 
-	for (i = 0 ; environ[i]; i++)
+	while (environ[i])
 	{
 		if (_strncmp(name, environ[i], nl) == 0)
 		{
@@ -26,13 +26,13 @@ char *_getenv(char *name)
 				return (NULL);
 			}
 
-			
 			for (x = nl + 1, j = 0; environ[i][x]; x++, j++)
 				value[j] = environ[i][x];
 
 			value[j] = '\0';
 			return (value);
 		}
+		i++;
 	}
 	return (NULL);
 }
