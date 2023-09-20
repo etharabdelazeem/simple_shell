@@ -1,9 +1,46 @@
 #include "shell.h"
 
 /**
- * path_cmd -  Search In $PATH For Excutable Command
- * @cmd: Parsed Input
- * Return: 1  Failure  0  Success.
+ * _getenv - same as get env to get the value of var
+ * @name: environment variable
+ * Return: the value on success, NULL on failure
+ */
+char *_getenv(char *name)
+{
+	size_t nl, vl;
+	char *value;
+	int i, x, j;
+
+	nl = _strlen(name);
+
+	for (i = 0 ; environ[i]; i++)
+	{
+		if (_strncmp(name, environ[i], nl) == 0)
+		{
+			vl = _strlen(environ[i]) - nl;
+			value = malloc(sizeof(char) * vl);
+			if (!value)
+			{
+				free(value);
+				perror("unable to alloc");
+				return (NULL);
+			}
+
+			
+			for (x = nl + 1, j = 0; environ[i][x]; x++, j++)
+				value[j] = environ[i][x];
+
+			value[j] = '\0';
+			return (value);
+		}
+	}
+	return (NULL);
+}
+
+/**
+ * path_cmd -  search for executable command $PATH
+ * @cmd: string of the command
+ * Return: 0 on success, 1 on failure
  */
 int path_cmd(char **cmd)
 {
@@ -22,6 +59,7 @@ int path_cmd(char **cmd)
 			free(path);
 			return (0);
 		}
+
 		free(cmd_path);
 		value = _strtok(NULL, ":");
 	}
@@ -29,12 +67,12 @@ int path_cmd(char **cmd)
 
 	return (1);
 }
+
 /**
- * build - Build Command
+ * build - function to build command
  * @token: Excutable Command
  * @value: Dirctory Conatining Command
- *
- * Return: Parsed Full Path Of Command Or NULL Case Failed
+ * Return: string of the path on success, NULL on failure
  */
 char *build(char *token, char *value)
 {
@@ -44,9 +82,7 @@ char *build(char *token, char *value)
 	len = _strlen(value) + _strlen(token) + 2;
 	cmd = malloc(sizeof(char) * len);
 	if (cmd == NULL)
-	{
 		return (NULL);
-	}
 
 	memset(cmd, 0, len);
 
@@ -55,42 +91,4 @@ char *build(char *token, char *value)
 	cmd = _strcat(cmd, token);
 
 	return (cmd);
-}
-/**
- * _getenv - Gets The Value Of Enviroment Variable By Name
- * @name: Environment Variable Name
- * Return: The Value of the Environment Variable Else NULL.
- */
-char *_getenv(char *name)
-{
-	size_t nl, vl;
-	char *value;
-	int i, x, j;
-
-	nl = _strlen(name);
-	for (i = 0 ; environ[i]; i++)
-	{
-		if (_strncmp(name, environ[i], nl) == 0)
-		{
-			vl = _strlen(environ[i]) - nl;
-			value = malloc(sizeof(char) * vl);
-			if (!value)
-			{
-				free(value);
-				perror("unable to alloc");
-				return (NULL);
-			}
-
-			j = 0;
-			for (x = nl + 1; environ[i][x]; x++, j++)
-			{
-				value[j] = environ[i][x];
-			}
-			value[j] = '\0';
-
-			return (value);
-		}
-	}
-
-	return (NULL);
 }
