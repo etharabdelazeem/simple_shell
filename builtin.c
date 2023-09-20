@@ -10,7 +10,7 @@ int change_dir(char **cmd, int er)
 {
 	int value = -1;
 	char cwd[PATH_MAX];
-	(void)ac;
+	(void) er;
 
 	if (cmd[1] == NULL)
 		value = chdir(getenv("HOME"));
