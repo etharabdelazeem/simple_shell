@@ -1,27 +1,10 @@
 #include "shell.h"
-/**
- * check_delim - Checks If A Character Match Any Char *
- * @c: Character To Check
- * @str: String To Check
- * Return: 1 Succes, 0 Failed
- */
-unsigned int check_delim(char c, const char *str)
-{
-	unsigned int i;
-
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		if (c == str[i])
-			return (1);
-	}
-	return (0);
-}
 
 /**
- * _strtok - Token A String Into Token (strtrok)
- * @str: String
- * @delim: Delimiter
- * Return: Pointer To The Next Token Or NULL
+ * _strtok - my own strtok function
+ * @str: string to tokenize
+ * @delim: delimiter
+ * Return: a pointer of next token, if not NULL
  */
 char *_strtok(char *str, const char *delim)
 {
@@ -35,10 +18,10 @@ char *_strtok(char *str, const char *delim)
 	if (ts == NULL)
 		return (NULL);
 	for (i = 0; ts[i] != '\0'; i++)
-	{
 		if (check_delim(ts[i], delim) == 0)
 			break;
-	}
+
+
 	if (nt[i] == '\0' || nt[i] == '#')
 	{
 		nt = NULL;
@@ -47,10 +30,10 @@ char *_strtok(char *str, const char *delim)
 	ts = nt + i;
 	nt = ts;
 	for (i = 0; nt[i] != '\0'; i++)
-	{
 		if (check_delim(nt[i], delim) == 1)
 			break;
-	}
+
+
 	if (nt[i] == '\0')
 		nt = NULL;
 	else
@@ -61,4 +44,22 @@ char *_strtok(char *str, const char *delim)
 			nt = NULL;
 	}
 	return (ts);
+}
+
+/**
+ * check_delim - check if a char is a delimiter or not
+ * @ch: the character
+ * @str: the string
+ * Return: on succes 1 and 0 on failure 
+ */
+unsigned int check_delim(char ch, const char *str)
+{
+	unsigned int i;
+
+	for (i = 0; str[i] != '\0'; i++)
+		if (ch == str[i])
+			return (1);
+
+
+	return (0);
 }
