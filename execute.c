@@ -1,10 +1,10 @@
 #include "shell.h"
 
 /**
- * handle_builtin - Handle Builtin Command
- * @cmd: Parsed Command
- * @er:statue of last Excute
- * Return: -1 Fail 0 Succes (Return :Excute Builtin)
+ * handle_builtin - selects which command to execute
+ * @cmd: the command string
+ * @er: last command data
+ * Return: 0 on success, -1 on failure
  */
 
 int handle_builtin(char **cmd, int er)
@@ -22,21 +22,19 @@ int handle_builtin(char **cmd, int er)
 	while ((bil + i)->command)
 	{
 		if (_strcmp(cmd[0], (bil + i)->command) == 0)
-		{
 			return ((bil + i)->fun(cmd, er));
-		}
 		i++;
 	}
 	return (-1);
 }
 /**
- * check_cmd - Excute Simple Shell Command (Fork,Wait,Excute)
- *
- * @cmd:Parsed Command
- * @input: User Input
- * @c:Shell Excution Time Case of Command Not Found
- * @argv:Program Name
- * Return: 1 Case Command Null -1 Wrong Command 0 Command Excuted
+ * check_cmd - (Fork, Wait & Excute) commands
+ * @cmd: the command string
+ * @input: input string 
+ * @c: number to be printed for error
+ * @argv: Argument Vector 
+ * Return: 1 on Null command, -1 if not found
+ *    ,0 on successful execution
  */
 int check_cmd(char **cmd, char *input, int c, char **argv)
 {
@@ -58,9 +56,7 @@ int check_cmd(char **cmd, char *input, int c, char **argv)
 	if (pid == 0)
 	{
 		if (_strncmp(*cmd, "./", 2) != 0 && _strncmp(*cmd, "/", 1) != 0)
-		{
 			path_cmd(cmd);
-		}
 
 		if (execve(*cmd, cmd, environ) == -1)
 		{
@@ -69,20 +65,9 @@ int check_cmd(char **cmd, char *input, int c, char **argv)
 			free(cmd);
 			exit(EXIT_FAILURE);
 		}
+
 		return (EXIT_SUCCESS);
 	}
 	wait(&status);
 	return (0);
-}
-/**
- * signal_to_handel - Handle ^C
- * @sig:Captured Signal
- * Return: Void
- */
-void signal_to_handel(int sig)
-{
-	if (sig == SIGINT)
-	{
-		PRINTER("\n$ ");
-	}
 }
