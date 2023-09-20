@@ -1,21 +1,21 @@
 #include "shell.h"
 
 /**
- * main - Simple Shell (Hsh)
- * @argc: Argument Count
- * @argv:Argument Value
- * Return: Exit Value By Status
+ * main - our main fuction to mimic the unix shell
+ * @argc:count of arguments
+ * @argv:vector of arguments
+ * Return:the exit status
  */
 
 int main(__attribute__((unused)) int argc, char **argv)
 {
-	char *input, **cmd;
-	int counter = 0, statue = 1, st = 0;
+	int counter = 0, status = 1, st = 0;
+	char *input, **command;
 
 	if (argv[1] != NULL)
 		read_file(argv[1], argv);
 	signal(SIGINT, signal_to_handel);
-	while (statue)
+	while (status)
 	{
 		counter++;
 		if (isatty(STDIN_FILENO))
@@ -31,7 +31,7 @@ int main(__attribute__((unused)) int argc, char **argv)
 		{
 			exit_bul(cmd, input, argv, counter);
 		}
-		else if (check_builtin(cmd) == 0)
+		else if (is_builtin(cmd) == 0)
 		{
 			st = handle_builtin(cmd, st);
 			free_all(cmd, input);
@@ -47,12 +47,12 @@ int main(__attribute__((unused)) int argc, char **argv)
 	return (statue);
 }
 /**
- * check_builtin - check builtin
+ * is_builtin - is the command a builtin
  *
- * @cmd:command to check
- * Return: 0 Succes -1 Fail
+ * @comd:the entered command
+ * Return: zero on success, -1 otherwise
  */
-int check_builtin(char **cmd)
+int is_builtin(char **comd)
 {
 	bul_t fun[] = {
 		{"cd", NULL},
@@ -62,29 +62,29 @@ int check_builtin(char **cmd)
 		{NULL, NULL}
 	};
 	int i = 0;
-		if (*cmd == NULL)
+		if (*comd == NULL)
 	{
 		return (-1);
 	}
 
 	while ((fun + i)->command)
 	{
-		if (_strcmp(cmd[0], (fun + i)->command) == 0)
+		if (_strcmp(comd[0], (fun + i)->command) == 0)
 			return (0);
 		i++;
 	}
 	return (-1);
 }
 /**
- * creat_envi - Creat Array of Enviroment Variable
- * @envi: Array of Enviroment Variable
- * Return: Void
+ * create_env - duplicates the environment variable
+ * @env: the environment variable
+ * Return: Nothing
  */
-void creat_envi(char **envi)
+void create_env(char **env)
 {
 	int i;
 
 	for (i = 0; environ[i]; i++)
-		envi[i] = _strdup(environ[i]);
-	envi[i] = NULL;
+		env[i] = _strdup(environ[i]);
+	env[i] = NULL;
 }
