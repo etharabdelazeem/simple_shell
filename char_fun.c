@@ -11,87 +11,105 @@ int _putchar(char c)
 {
 	return (write(1, &c, 1));
 }
-/**
- * _strncpy - copie a string
- * @dest:char
- *  @src:char
- * @n:int
- * Return:char
- */
 
+/**
+ * _strlen - return length of a string
+ * @s: points to array of chars
+ * Description: does the job
+ *
+ * Return: the length
+ */
+int _strlen(char *s)
+{
+	int count = 0;
+
+	while (*(s + count) != '\0')
+		count++;
+	return (count);
+
+}
+
+/**
+ * _strncpy - copies a part only
+ * @dest: a pointer to destination array
+ * @src: a pointer to source array
+ * @n: an input integer indicating how much to append
+ * Description: copies n characters of source into dest
+ *
+ * Return: pointer to source
+ */
 char *_strncpy(char *dest, char *src, int n)
 {
-int i;
+	int i = 0;
 
-i = 0;
-	while (i < n && *(src + i))
+	while (n)
 	{
-	*(dest + i) = *(src + i);
-	i++;
+		if (src[i] == '\0')
+			break;
+		*(dest + i) = src[i];
+		i++;
+		n--;
 	}
-	while (i < n)
+	while (n)
 	{
-	*(dest + i) = '\0';
-	i++;
+		*(dest + i) = '\0';
+		i++;
+		n--;
 	}
 	return (dest);
 }
 
 /**
- * _strlen - lenght of string
- * @s:char
- * Return:int
- */
-
-int _strlen(char *s)
-{
-	int i;
-
-		for (i = 0; s[i] != '\0'; i++)
-		{
-			continue;
-		}
-return (i);
-}
-
-/**
- * _atoi - convert to a int
- * @s:string
- * Return:int
- */
-int _atoi(char *s)
-{
-int i, j, n, x;
-
-	i = n = 0;
-	x = 1;
-	while ((s[i] < '0' || s[i] > '9') && (s[i] != '\0'))
-	{
-		if (s[i] == '-')
-			x *= -1;
-		i++;
-	}
-	j = i;
-	while ((s[j] >= '0') && (s[j] <= '9'))
-	{
-		n = (n * 10) + x * ((s[j]) - '0');
-		j++;
-	}
-	return (n);
-}
-/**
- * _puts - print a string
- * @str:pointer char
- * return:void
+ * _puts - print sentence
+ * @str: pointer of array
+ * Descripton: neck hurts
+ *
+ * Return: void
  */
 void _puts(char *str)
 {
-	int i;
+	int count = 0;
 
-	for (i = 0; str[i] != '\0'; i++)
+	while (*(str + count) != '\0')
 	{
-		_putchar(str[i]);
+		_putchar(*(str + count));
+		count++;
 	}
-_putchar('\n');
-return;
+	_putchar('\n');
+}
+
+/**
+ * _atoi - function
+ * @s: pointer to array
+ * Description: oooh
+ *
+ * Return: an int
+ */
+int _atoi(char *s)
+{
+	unsigned int count = 0, size = 0, oi = 0, pn = 1, m = 1, i;
+
+	while (*(s + count) != '\0')
+	{
+		if (size > 0 && (*(s + count) < '0' || *(s + count) > '9'))
+			break;
+
+		if (*(s + count) == '-')
+			pn *= -1;
+
+		if ((*(s + count) >= '0') && (*(s + count) <= '9'))
+		{
+			if (size > 0)
+				m *= 10;
+			size++;
+		}
+		count++;
+	}
+
+	for (i = count - size; i < count; i++)
+	{
+		oi = oi + ((*(s + i) - 48) * m);
+		m /= 10;
+	}
+	return (oi * pn);
 }
