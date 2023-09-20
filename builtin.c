@@ -1,57 +1,21 @@
 #include "shell.h"
-/**
- * exit_bul - Exit Statue Shell
- * @cmd: Parsed Command
- * @input: User Input
- * @argv:Program Name
- * @c:Excute Count
- * Return: Void (Exit Statue)
- */
-void  exit_bul(char **cmd, char *input, char **argv, int c)
-{
-	int statue, i = 0;
-
-	if (cmd[1] == NULL)
-	{
-		free(input);
-		free(cmd);
-		exit(EXIT_SUCCESS);
-	}
-	while (cmd[1][i])
-	{
-		if (_isalpha(cmd[1][i++]) != 0)
-		{
-			_prerror(argv, c, cmd);
-			break;
-		}
-		else
-		{
-			statue = _atoi(cmd[1]);
-			free(input);
-			free(cmd);
-			exit(statue);
-		}
-	}
-}
-
 
 /**
- * change_dir - Change Dirctorie
- * @cmd: Parsed Command
- * @er: Statue Last Command Excuted
- * Return: 0 Succes 1 Failed (For Old Pwd Always 0 Case No Old PWD)
+ * change_dir - command to change the dir
+ * @cmd: the command string
+ * @er: last command data
+ * Return: 0 on success or 1 on failure
  */
-int change_dir(char **cmd, __attribute__((unused))int er)
+int change_dir(char **cmd, int er)
 {
 	int value = -1;
 	char cwd[PATH_MAX];
+	(void)ac;
 
 	if (cmd[1] == NULL)
 		value = chdir(getenv("HOME"));
 	else if (_strcmp(cmd[1], "-") == 0)
-	{
 		value = chdir(getenv("OLDPWD"));
-	}
 	else
 		value = chdir(cmd[1]);
 
@@ -68,16 +32,18 @@ int change_dir(char **cmd, __attribute__((unused))int er)
 	}
 	return (0);
 }
+
 /**
- * dis_env - Display Enviroment Variable
- * @cmd:Parsed Command
- * @er:Statue of Last command Excuted
- * Return:Always 0
+ * dis_env - print the enviroment variable (stdout)
+ * @cmd: the command string
+ * @er: last command data
+ * Return: Always 0 (success)
  */
-int dis_env(__attribute__((unused)) char **cmd, __attribute__((unused)) int er)
+int dis_env(char __attribute__((unused)) **cmd, int er)
 {
-size_t i;
+	size_t i;
 	int len;
+	(void) er;
 
 	for (i = 0; environ[i] != NULL; i++)
 	{
@@ -85,18 +51,21 @@ size_t i;
 		write(1, environ[i], len);
 		write(STDOUT_FILENO, "\n", 1);
 	}
+
 	return (0);
 }
+
 /**
- * display_help - Displaying Help For Builtin
- * @cmd:Parsed Command
- * @er: Statue Of Last Command Excuted
- * Return: 0 Succes -1 Fail
+ * display_help - print help for builtin (stdout)
+ * @cmd: the command string
+ * @er: last command data
+ * Return: 0 on success and -1 on failure
  */
-int display_help(char **cmd, __attribute__((unused))int er)
+int display_help(char **cmd, int er)
 {
 	int fd, fw, rd = 1;
 	char c;
+	(void) er;
 
 	fd = open(cmd[1], O_RDONLY);
 	if (fd < 0)
@@ -104,6 +73,7 @@ int display_help(char **cmd, __attribute__((unused))int er)
 		perror("Error");
 		return (0);
 	}
+
 	while (rd > 0)
 	{
 		rd = read(fd, &c, 1);
@@ -114,18 +84,22 @@ int display_help(char **cmd, __attribute__((unused))int er)
 		}
 	}
 	_putchar('\n');
+
 	return (0);
 }
+
 /**
- * echo_bul - Excute Echo Cases
- * @st:Statue Of Last Command Excuted
- * @cmd: Parsed Command
- * Return: Always 0 Or Excute Normal Echo
+ * echo_bul - funcrion for echo cases
+ * @st: last command data
+ * @cmd: the command string
+ * Return: Always 0 (success)
  */
 int echo_bul(char **cmd, int st)
 {
 	char *path;
-	unsigned int  pid = getppid();
+	unsigned int pid;
+	
+	pid = getppid();
 
 	if (_strncmp(cmd[1], "$?", 2) == 0)
 	{
@@ -149,5 +123,42 @@ int echo_bul(char **cmd, int st)
 	else
 		return (print_echo(cmd));
 
+	
 	return (1);
+}
+
+/**
+ * exit_bul - function to call when exit
+ * @cmd: the command string
+ * @input: input from the user
+ * @argv: Argument Vector
+ * @count: count for the error
+ * Return: nothing
+ */
+void  exit_bul(char **cmd, char *input, char **argv, int count)
+{
+	int statue, i = 0;
+
+	if (cmd[1] == NULL)
+	{
+		free(input);
+		free(cmd);
+		exit(EXIT_SUCCESS);
+	}
+
+	while (cmd[1][i])
+	{
+		if (_isalpha(cmd[1][i++]) != 0)
+		{
+			_prerror(argv, count, cmd);
+			break;
+		}
+		else
+		{
+			statue = _atoi(cmd[1]);
+			free(input);
+			free(cmd);
+			exit(statue);
+		}
+	}
 }
