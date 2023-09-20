@@ -10,7 +10,7 @@
 int main(__attribute__((unused)) int argc, char **argv)
 {
 	int counter = 0, status = 1, st = 0;
-	char *input, **command;
+	char *input, **cmnd;
 
 	if (argv[1] != NULL)
 		read_file(argv[1], argv);
@@ -26,25 +26,38 @@ int main(__attribute__((unused)) int argc, char **argv)
 			continue;
 		}
 		history(input);
-		cmd = parse_cmd(input);
-		if (_strcmp(cmd[0], "exit") == 0)
+		cmnd = parse_cmd(input);
+		if (_strcmp(cmnd[0], "exit") == 0)
 		{
-			exit_bul(cmd, input, argv, counter);
+			exit_bul(cmnd, input, argv, counter);
 		}
-		else if (is_builtin(cmd) == 0)
+		else if (is_builtin(cmnd) == 0)
 		{
-			st = handle_builtin(cmd, st);
-			free_all(cmd, input);
+			st = handle_builtin(cmnd, st);
+			free_all(cmnd, input);
 			continue;
 		}
 		else
 		{
-			st = check_cmd(cmd, input, counter, argv);
+			st = check_cmd(cmnd, input, counter, argv);
 
 		}
-		free_all(cmd, input);
+		free_all(cmnd, input);
 	}
-	return (statue);
+	return (status);
+}
+/**
+ * create_env - duplicates the environment variable
+ * @env: the environment variable
+ * Return: Nothing
+ */
+void create_env(char **env)
+{
+	int i;
+
+	for (i = 0; environ[i]; i++)
+		env[i] = _strdup(environ[i]);
+	env[i] = NULL;
 }
 /**
  * is_builtin - is the command a builtin
@@ -74,17 +87,4 @@ int is_builtin(char **comd)
 		i++;
 	}
 	return (-1);
-}
-/**
- * create_env - duplicates the environment variable
- * @env: the environment variable
- * Return: Nothing
- */
-void create_env(char **env)
-{
-	int i;
-
-	for (i = 0; environ[i]; i++)
-		env[i] = _strdup(environ[i]);
-	env[i] = NULL;
 }
