@@ -1,10 +1,38 @@
 #include "shell.h"
 
 /**
- * _strcmp - Compare Two String
- * @s1:String 1
- * @s2:String 2
- * Return: 0 If Identical Otherwise How Much Diffrent
+ * _itoa - a function to convert an integer to a char
+ * @n: the integer that is to;be converted
+ *
+ * Return: a pointer to the chat
+ */
+char *_itoa(unsigned int n)
+{
+	int len = 0, i = 0;
+	char *s;
+
+	len = intlen(n);
+	s = malloc(len + 1);
+	if (!s)
+		return (NULL);
+	*s = '\0';
+	while (n / 10)
+	{
+		s[i] = (n % 10) + '0';
+		n /= 10;
+		i++;
+	}
+	s[i] = (n % 10) + '0';
+	array_rev(s, len);
+	s[i + 1] = '\0';
+	return (s);
+}
+
+/**
+ * _strcmp - function to compare two input strings
+ * @s1: the string to compare
+ * @s2: the string to compare to
+ * Return: zero if identical and the difference otherwise
  */
 int _strcmp(char *s1, char *s2)
 {
@@ -28,53 +56,48 @@ len2 = _strlen(s2);
 	}
 	return (cmp);
 }
+
 /**
- * _isalpha - Check if Alphabtic
- *@c: Character
- * Return: 1 If True 0 If Not
+ * _isalpha - sees if c is an alphabet char
+ *@c:the character to be checked for
+ * Return: one if it is otherwise zero
  */
 int _isalpha(int c)
 {
-if (((c >= 97) && (c <= 122)) || ((c >= 65) && (c <= 90)))
-{
-return (1);
-}
-else
-{
-return (0);
-}
-}
-/**
- * _itoa - Convert Integer To Char
- * @n: Int To Convert
- * Return: Char Pointer
- */
-char *_itoa(unsigned int n)
-{
-	int len = 0, i = 0;
-	char *s;
-
-	len = intlen(n);
-	s = malloc(len + 1);
-	if (!s)
-		return (NULL);
-	*s = '\0';
-	while (n / 10)
+	if (((c >= 97) && (c <= 122)) || ((c >= 65) && (c <= 90)))
 	{
-		s[i] = (n % 10) + '0';
-		n /= 10;
-		i++;
+		return (1);
 	}
-	s[i] = (n % 10) + '0';
-	array_rev(s, len);
-	s[i + 1] = '\0';
-	return (s);
+	else
+	{
+		return (0);
+	}
 }
+
 /**
- *  array_rev - Reverse Array
- * @arr:Array To Reverse
- * @len:Length Of Array
- * Return: Void(Reverse Array)
+ * intlen - counts the length of an intger
+ * @num: the intger to;be counted
+ *
+ * Return: the length of the intger
+ */
+int intlen(int num)
+{
+	int len = 0;
+
+	while (num != 0)
+	{
+		len++;
+		num /= 10;
+	}
+	return (len);
+}
+
+/**
+ *  array_rev - reverses the given array
+ * @arr: the given array
+ * @len: the length of `the given array
+ *
+ * Return:nothing
  */
 void array_rev(char *arr, int len)
 {
@@ -87,20 +110,4 @@ void array_rev(char *arr, int len)
 		arr[i] = arr[(len - 1) - i];
 		arr[(len - 1) - i] = tmp;
 	}
-}
-/**
- * intlen - Determine Length Of Int
- * @num: Given Int
- * Return: Length Of Int
- */
-int intlen(int num)
-{
-	int len = 0;
-
-	while (num != 0)
-	{
-		len++;
-		num /= 10;
-	}
-	return (len);
 }
