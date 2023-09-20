@@ -50,7 +50,7 @@ void treat_file(char *line, int counter, FILE *fp, char **argv)
 	{
 		exit_bul_for_file(cmd, line, fp);
 	}
-	else if (check_builtin(cmd) == 0)
+	else if (is_builtin(cmd) == 0)
 	{
 		st = handle_builtin(cmd, st);
 		free(cmd);
