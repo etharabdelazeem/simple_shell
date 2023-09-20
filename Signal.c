@@ -1,3 +1,5 @@
+#include "shell.h"
+
 /**
  * _signal_ - not to exit by ^C
  * @signal: the signal
