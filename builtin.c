@@ -117,7 +117,8 @@ int echo_bul(char **cmd, int st)
 		path = _getenv("PATH");
 		PRINTER(path);
 		PRINTER("\n");
-		free(path);
+		if (path)
+			free(path);
 
 	}
 	else
@@ -141,8 +142,10 @@ void  exit_bul(char **cmd, char *input, char **argv, int count)
 
 	if (cmd[1] == NULL)
 	{
-		free(input);
-		free(cmd);
+		if (input)
+			free(input);
+		if (cmd)
+			free(cmd);
 		exit(EXIT_SUCCESS);
 	}
 
@@ -156,8 +159,10 @@ void  exit_bul(char **cmd, char *input, char **argv, int count)
 		else
 		{
 			statue = _atoi(cmd[1]);
-			free(input);
-			free(cmd);
+			if (input)
+				free(input);
+			if (cmd)
+				free(cmd);
 			exit(statue);
 		}
 	}

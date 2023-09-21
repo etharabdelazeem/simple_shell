@@ -68,8 +68,10 @@ void *_calloc(unsigned int size)
  */
 void free_all(char **cmd, char *line)
 {
-	free(cmd);
-	free(line);
+	if (cmd)
+		free(cmd);
+	if (line)
+		free(line);
 
 
 	cmd = NULL;

@@ -15,7 +15,8 @@ void print_error(char *input, int counter, char **argv)
 	PRINTER(": ");
 	er = _itoa(counter);
 	PRINTER(er);
-	free(er);
+	if (er)
+		free(er);
 	PRINTER(": ");
 	PRINTER(input);
 	PRINTER(": not found\n");

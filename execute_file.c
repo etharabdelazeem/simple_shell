@@ -53,12 +53,14 @@ void treat_file(char *line, int counter, FILE *fp, char **argv)
 	else if (is_builtin(cmd) == 0)
 	{
 		st = handle_builtin(cmd, st);
-		free(cmd);
+		if (cmd)
+			free(cmd);
 	}
 		else
 	{
 		st = check_cmd(cmd, line, counter, argv);
-		free(cmd);
+		if (cmd)
+			free(cmd);
 	}
 }
 
@@ -75,8 +77,10 @@ void exit_bul_for_file(char **cmd, char *line, FILE *fd)
 
 	if (cmd[1] == NULL)
 	{
-		free(line);
-		free(cmd);
+		if (line)
+			free(line);
+		if (cmd)
+			free(cmd);
 		fclose(fd);
 		exit(errno);
 	}
@@ -89,8 +93,10 @@ void exit_bul_for_file(char **cmd, char *line, FILE *fd)
 
 	statue = _atoi(cmd[1]);
 
-	free(line);
-	free(cmd);
+	if (line)
+		free(line);
+	if (cmd)
+		free(cmd);
 
 	fclose(fd);
 	exit(statue);

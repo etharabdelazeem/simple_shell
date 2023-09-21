@@ -21,7 +21,6 @@ char *_getenv(char *name)
 			value = malloc(sizeof(char) * vl);
 			if (!value)
 			{
-				free(value);
 				perror("unable to alloc");
 				return (NULL);
 			}
@@ -55,15 +54,19 @@ int path_cmd(char **cmd)
 		if (stat(cmd_path, &buf) == 0)
 		{
 			*cmd = _strdup(cmd_path);
-			free(cmd_path);
-			free(path);
+			if (cmd_path)
+				free(cmd_path);
+			if (path)
+				free(path);
 			return (0);
 		}
 
-		free(cmd_path);
+		if (cmd_path)
+			free(cmd_path);
 		value = _strtok(NULL, ":");
 	}
-	free(path);
+	if (path)
+		free(path);
 
 	return (1);
 }

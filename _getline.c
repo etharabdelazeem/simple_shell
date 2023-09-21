@@ -11,10 +11,7 @@ char *_getline()
 	char *buff = malloc(buffsize);
 
 	if (buff == NULL)
-	{
-		free(buff);
 		return (NULL);
-	}
 
 	for (i = 0; c != EOF && c != '\n'; i++)
 	{
@@ -22,14 +19,16 @@ char *_getline()
 		rd = read(STDIN_FILENO, &c, 1);
 		if (rd == 0)
 		{
-			free(buff);
+			if (buff)
+				free(buff);
 			exit(EXIT_SUCCESS);
 		}
 
 		buff[i] = c;
 		if (buff[0] == '\n')
 		{
-			free(buff);
+			if (buff)
+				free(buff);
 			return ("\0");
 		}
 		if (i >= buffsize)

@@ -19,5 +19,6 @@ void _prerror(char **argv, int c, char **cmd)
 	PRINTER(": Illegal number: ");
 	PRINTER(cmd[1]);
 	PRINTER("\n");
-	free(er);
+	if (er)
+		free(er);
 }

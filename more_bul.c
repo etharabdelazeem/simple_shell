@@ -26,7 +26,8 @@ int history_dis(char **cmd, int ec)
 		counter++;
 		er = _itoa(counter);
 		PRINTER(er);
-		free(er);
+		if (er)
+			free(er);
 		PRINTER(" ");
 		PRINTER(line);
 

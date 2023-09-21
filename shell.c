@@ -1,6 +1,23 @@
 #include "shell.h"
 
 /**
+ * all_space - checks if the command has only spaces
+ * @line: to check
+ * Return: 1 if all space 0 oterwise
+ */
+int all_space(char *line)
+{
+	unsigned int i, length = _strlen(line) - 1;
+
+	for (i = 0; i < length; i++)
+	{
+		if (line[i] != ' ')
+			return (0);
+	}
+	return (1);
+}
+
+/**
  * main - our main fuction to mimic the unix shell
  * @argc:count of arguments
  * @argv:vector of arguments
@@ -21,7 +38,7 @@ int main(__attribute__((unused)) int argc, char **argv)
 		if (isatty(STDIN_FILENO))
 			prompt();
 		input = _getline();
-		if (input[0] == '\0')
+		if (input[0] == '\0' || all_space(input))
 		{
 			continue;
 		}
