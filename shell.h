@@ -10,7 +10,7 @@ extern char **environ;
 
 #define BUFSIZE 1024
 #define DELIM " \t\r\n\a"
-#define PRINTER(c) (write(STDOUT_FILENO, c, _strlen(c)))
+#define PRINTER(c) (write(STDERR_FILENO, c, _strlen(c)))
 
 
 /* Libraries */
